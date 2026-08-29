@@ -1,5 +1,5 @@
 import React from 'react';
-import { Plus, Trash2, CheckCircle, Sparkles, BookOpen, Layers } from 'lucide-react';
+import { Plus, Trash2, CheckCircle, Sparkles, BookOpen, Layers, Sliders, Wand2, Lightbulb } from 'lucide-react';
 import { RubricCriteria } from '../../types';
 import { RubricWeightGauge } from './RubricWeightGauge';
 
@@ -24,7 +24,6 @@ export const RubricsEditor: React.FC<RubricsEditorProps> = ({
     if (rubrics.length === 0) return;
     const equalShare = parseFloat((100 / rubrics.length).toFixed(1));
     const balanced = rubrics.map((r, idx) => {
-      // Ajustar redondeo en el último elemento
       if (idx === rubrics.length - 1) {
         const currentSum = equalShare * (rubrics.length - 1);
         return { ...r, weightPercentage: parseFloat((100 - currentSum).toFixed(1)) };
@@ -142,66 +141,70 @@ export const RubricsEditor: React.FC<RubricsEditorProps> = ({
       name: `Nuevo Criterio ${rubrics.length + 1}`,
       weightPercentage: 0,
       maxScore: 10,
-      descriptionMaxLevel: 'Cumplimiento exhaustivo de todos los puntos solicitados por el docente.'
+      descriptionMaxLevel: 'Cumplimiento exhaustivo de todos los puntos solicitados por el docente para 10/10.'
     });
   };
 
   return (
     <div className="space-y-4">
       
-      {/* Indicador Semántico 100% */}
+      {/* Medidor Semántico de 100% */}
       <RubricWeightGauge
         totalWeight={totalWeight}
         onAutoBalance={handleAutoBalance}
       />
 
-      {/* Plantillas Preconfiguradas Rápidas */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
-        <span className="text-slate-400 text-xs font-semibold whitespace-nowrap">
-          Plantillas:
+      {/* Chips de Presets Rápidos */}
+      <div className="space-y-2">
+        <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 px-1 flex items-center gap-1.5">
+          <Wand2 className="w-3.5 h-3.5 text-cyan-400" />
+          <span>Plantillas de Rúbricas Inteligentes</span>
         </span>
-        <button
-          type="button"
-          onClick={() => handleApplyPreset('engineering')}
-          className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-slate-700 whitespace-nowrap transition-colors"
-        >
-          ⚙️ Ingeniería & Cálculo
-        </button>
-        <button
-          type="button"
-          onClick={() => handleApplyPreset('business')}
-          className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-slate-700 whitespace-nowrap transition-colors"
-        >
-          📊 Negocios & Finanzas
-        </button>
-        <button
-          type="button"
-          onClick={() => handleApplyPreset('programming')}
-          className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-indigo-300 border border-slate-700 whitespace-nowrap transition-colors"
-        >
-          💻 Código & Software
-        </button>
-        <button
-          type="button"
-          onClick={() => handleApplyPreset('academic')}
-          className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 whitespace-nowrap transition-colors"
-        >
-          📘 Ensayo Académico
-        </button>
+        
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <button
+            type="button"
+            onClick={() => handleApplyPreset('engineering')}
+            className="flex items-center justify-center gap-1.5 p-2 rounded-xl bg-slate-900/80 hover:bg-cyan-500/10 border border-slate-800 hover:border-cyan-500/40 text-xs font-bold text-cyan-300 transition-all active:scale-95 shadow-sm"
+          >
+            <span>⚙️ Ingeniería</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => handleApplyPreset('business')}
+            className="flex items-center justify-center gap-1.5 p-2 rounded-xl bg-slate-900/80 hover:bg-emerald-500/10 border border-slate-800 hover:border-emerald-500/40 text-xs font-bold text-emerald-300 transition-all active:scale-95 shadow-sm"
+          >
+            <span>📊 Finanzas</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => handleApplyPreset('programming')}
+            className="flex items-center justify-center gap-1.5 p-2 rounded-xl bg-slate-900/80 hover:bg-indigo-500/10 border border-slate-800 hover:border-indigo-500/40 text-xs font-bold text-indigo-300 transition-all active:scale-95 shadow-sm"
+          >
+            <span>💻 Software</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => handleApplyPreset('academic')}
+            className="flex items-center justify-center gap-1.5 p-2 rounded-xl bg-slate-900/80 hover:bg-amber-500/10 border border-slate-800 hover:border-amber-500/40 text-xs font-bold text-amber-300 transition-all active:scale-95 shadow-sm"
+          >
+            <span>📘 Académico</span>
+          </button>
+        </div>
       </div>
 
-      {/* Lista de Criterios */}
-      <div className="space-y-3">
+      {/* Lista de Tarjetas de Criterios */}
+      <div className="space-y-3 pt-1">
         {rubrics.map((r, index) => (
           <div
             key={r.id}
-            className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 space-y-3 transition-all"
+            className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-slate-700/80 shadow-md space-y-3 transition-all"
           >
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               
-              {/* Nombre del Criterio */}
-              <div className="flex items-center gap-2 flex-1">
-                <span className="w-6 h-6 rounded-md bg-cyan-500/20 text-cyan-300 text-xs font-bold flex items-center justify-center flex-shrink-0">
+              {/* Título del Criterio */}
+              <div className="flex items-center gap-2.5 flex-1">
+                <span className="w-7 h-7 rounded-xl bg-cyan-500/20 text-cyan-300 text-xs font-black flex items-center justify-center flex-shrink-0 border border-cyan-500/30">
                   {index + 1}
                 </span>
                 <input
@@ -209,14 +212,14 @@ export const RubricsEditor: React.FC<RubricsEditorProps> = ({
                   value={r.name}
                   onChange={(e) => onUpdateRubric(r.id, { name: e.target.value })}
                   placeholder="Nombre del criterio (ej: Claridad metodológica)"
-                  className="glass-input rounded-lg px-2.5 py-1.5 text-xs sm:text-sm font-semibold w-full"
+                  className="glass-input rounded-xl px-3 py-2 text-xs sm:text-sm font-bold w-full"
                 />
               </div>
 
-              {/* Ponderación y Botón Eliminar */}
-              <div className="flex items-center gap-2 justify-end">
-                <div className="flex items-center gap-1 bg-slate-800/90 px-2.5 py-1 rounded-lg border border-slate-700">
-                  <span className="text-xs text-slate-400 font-medium">Peso:</span>
+              {/* Control de Peso con Slider & Input Numérico */}
+              <div className="flex items-center gap-3 justify-end">
+                <div className="flex items-center gap-2 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800">
+                  <span className="text-xs text-slate-400 font-semibold">Peso:</span>
                   <input
                     type="number"
                     min="0"
@@ -228,7 +231,7 @@ export const RubricsEditor: React.FC<RubricsEditorProps> = ({
                       const val = e.target.value === '' ? 0 : parseFloat(e.target.value);
                       onUpdateRubric(r.id, { weightPercentage: isNaN(val) ? 0 : Math.min(100, Math.max(0, val)) });
                     }}
-                    className="w-12 bg-transparent text-xs sm:text-sm font-bold text-cyan-300 text-right outline-none"
+                    className="w-12 bg-transparent text-xs sm:text-sm font-black text-cyan-300 text-right outline-none font-mono"
                   />
                   <span className="text-xs text-cyan-400 font-bold">%</span>
                 </div>
@@ -236,7 +239,7 @@ export const RubricsEditor: React.FC<RubricsEditorProps> = ({
                 <button
                   type="button"
                   onClick={() => onRemoveRubric(r.id)}
-                  className="p-1.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                  className="p-2 rounded-xl text-slate-500 hover:text-red-400 hover:bg-red-500/10 transition-colors"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -244,17 +247,31 @@ export const RubricsEditor: React.FC<RubricsEditorProps> = ({
 
             </div>
 
+            {/* Slider de Ponderación Dinámico */}
+            <div className="flex items-center gap-3 px-1">
+              <input
+                type="range"
+                min="0"
+                max="100"
+                step="5"
+                value={r.weightPercentage}
+                onChange={(e) => onUpdateRubric(r.id, { weightPercentage: parseFloat(e.target.value) })}
+                className="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+              />
+            </div>
+
             {/* Exigencia para la Máxima Nota */}
             <div>
-              <label className="block text-[11px] font-semibold text-slate-400 mb-1">
-                Exigencia del Docente para Calificación Máxima (10/10):
+              <label className="block text-[11px] font-bold text-slate-400 mb-1 flex items-center gap-1.5">
+                <Lightbulb className="w-3.5 h-3.5 text-amber-400" />
+                <span>Requisito del Docente para Calificación Máxima (10/10):</span>
               </label>
               <textarea
                 rows={2}
                 value={r.descriptionMaxLevel}
                 onChange={(e) => onUpdateRubric(r.id, { descriptionMaxLevel: e.target.value })}
-                placeholder="Describe qué requiere el profesor para otorgar la máxima puntuación en este criterio..."
-                className="w-full glass-input rounded-lg p-2 text-xs resize-none"
+                placeholder="Describe qué exige el profesor para otorgar la máxima puntuación en este criterio..."
+                className="w-full glass-input rounded-xl p-2.5 text-xs resize-none leading-relaxed placeholder:text-slate-500"
               />
             </div>
           </div>
@@ -265,7 +282,7 @@ export const RubricsEditor: React.FC<RubricsEditorProps> = ({
       <button
         type="button"
         onClick={handleAddNewEmpty}
-        className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-dashed border-slate-700 hover:border-cyan-400/60 bg-slate-900/40 hover:bg-cyan-500/5 text-slate-300 hover:text-cyan-300 text-xs sm:text-sm font-semibold transition-all"
+        className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl border-2 border-dashed border-slate-800 hover:border-cyan-400/60 bg-slate-950/40 hover:bg-cyan-500/5 text-slate-300 hover:text-cyan-300 text-xs sm:text-sm font-bold transition-all shadow-sm active:scale-95"
       >
         <Plus className="w-4 h-4" />
         <span>Añadir Criterio de Rúbrica Personalizado</span>
