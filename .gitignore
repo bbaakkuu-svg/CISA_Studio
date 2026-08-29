@@ -13,6 +13,7 @@ output/
 ApkFlow/output/
 *.apk
 *.aab
+*.tsbuildinfo
 
 # Mobile & Capacitor temporary folders
 cisa-mobile/
