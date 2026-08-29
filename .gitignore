@@ -8,11 +8,13 @@ coverage/
 
 # Production & Build outputs
 dist/
+dist-electron/
 build/
 output/
 ApkFlow/output/
 *.apk
 *.aab
+*.exe
 *.tsbuildinfo
 
 # Mobile & Capacitor temporary folders
