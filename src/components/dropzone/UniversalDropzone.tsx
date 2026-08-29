@@ -14,6 +14,7 @@ import {
   FileCode
 } from 'lucide-react';
 import { TaskFileItem, FileRole } from '../../types';
+import { formatBytes } from '../../utils/formatters';
 
 interface UniversalDropzoneProps {
   files: TaskFileItem[];
@@ -113,9 +114,7 @@ export const UniversalDropzone: React.FC<UniversalDropzoneProps> = ({
   };
 
   const formatFileSize = (bytes: number) => {
-    if (bytes < 1024) return `${bytes} B`;
-    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-    return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+    return formatBytes(bytes);
   };
 
   const getFileIcon = (file: TaskFileItem) => {

@@ -2,6 +2,7 @@ import React from 'react';
 import { Plus, Trash2, CheckCircle, Sparkles, BookOpen, Layers, Sliders, Wand2, Lightbulb } from 'lucide-react';
 import { RubricCriteria } from '../../types';
 import { RubricWeightGauge } from './RubricWeightGauge';
+import { calculateTotalRubricWeight, autoBalanceRubrics } from '../../utils/validators';
 
 interface RubricsEditorProps {
   rubrics: RubricCriteria[];
@@ -18,19 +19,13 @@ export const RubricsEditor: React.FC<RubricsEditorProps> = ({
   onRemoveRubric,
   onSetRubrics
 }) => {
-  const totalWeight = rubrics.reduce((acc, r) => acc + (r.weightPercentage || 0), 0);
+  const totalWeight = calculateTotalRubricWeight(rubrics);
 
   const handleAutoBalance = () => {
-    if (rubrics.length === 0) return;
-    const equalShare = parseFloat((100 / rubrics.length).toFixed(1));
-    const balanced = rubrics.map((r, idx) => {
-      if (idx === rubrics.length - 1) {
-        const currentSum = equalShare * (rubrics.length - 1);
-        return { ...r, weightPercentage: parseFloat((100 - currentSum).toFixed(1)) };
-      }
-      return { ...r, weightPercentage: equalShare };
-    });
-    onSetRubrics(balanced);
+    const balanced = autoBalanceRubrics(rubrics);
+    if (balanced.length > 0) {
+      onSetRubrics(balanced);
+    }
   };
 
   const handleApplyPreset = (type: 'engineering' | 'business' | 'programming' | 'academic') => {
