@@ -15,6 +15,8 @@ import {
 import { RubricCriteria } from '../../types';
 
 interface RubricsInputPanelProps {
+  title: string;
+  directPrompt: string;
   rubrics: RubricCriteria[];
   onAddRubric: (rubric: RubricCriteria) => void;
   onUpdateRubric: (id: string, updated: Partial<RubricCriteria>) => void;
@@ -25,6 +27,8 @@ interface RubricsInputPanelProps {
 }
 
 export const RubricsInputPanel: React.FC<RubricsInputPanelProps> = ({
+  title,
+  directPrompt,
   rubrics,
   onAddRubric,
   onUpdateRubric,
@@ -135,6 +139,156 @@ export const RubricsInputPanel: React.FC<RubricsInputPanelProps> = ({
     onSetRubrics(preset);
   };
 
+  const [isExtracting, setIsExtracting] = React.useState(false);
+
+  const handleExtractAiRubrics = () => {
+    if (!title && !directPrompt) {
+      alert("Por favor ingresa un título o descripción de la tarea en el Paso 1 para poder extraer rúbricas contextuales.");
+      return;
+    }
+
+    setIsExtracting(true);
+    setTimeout(() => {
+      setIsExtracting(false);
+      
+      const textToAnalyze = `${title} ${directPrompt}`.toLowerCase();
+      let extracted: RubricCriteria[] = [];
+
+      // 1. Detección por contexto de Sistemas Distribuidos / Consenso / Computación
+      if (
+        textToAnalyze.includes('distribuid') ||
+        textToAnalyze.includes('consenso') ||
+        textToAnalyze.includes('bft') ||
+        textToAnalyze.includes('redes') ||
+        textToAnalyze.includes('servidor') ||
+        textToAnalyze.includes('tps') ||
+        textToAnalyze.includes('latencia')
+      ) {
+        extracted = [
+          {
+            id: `r-ai-${Date.now()}-1`,
+            name: 'Análisis de Arquitectura & Consenso Distribuido',
+            weightPercentage: 40,
+            maxScore: 10,
+            descriptionMaxLevel: 'Demostración formal y diagramas detallados del protocolo de consenso (BFT, Raft o Paxos) con su tolerancia a fallos.'
+          },
+          {
+            id: `r-ai-${Date.now()}-2`,
+            name: 'Métricas de Latencia, Rendimiento & Escalabilidad',
+            weightPercentage: 35,
+            maxScore: 10,
+            descriptionMaxLevel: 'Cálculos y gráficas de Throughput (TPS) frente a incremento de nodos concurrentes.'
+          },
+          {
+            id: `r-ai-${Date.now()}-3`,
+            name: 'Verificación Formal de Seguridad',
+            weightPercentage: 25,
+            maxScore: 10,
+            descriptionMaxLevel: 'Prueba de consistencia matemática demostrando el umbral n >= 3f + 1 y resistencia ante particiones de red.'
+          }
+        ];
+      }
+      // 2. Detección por contexto Contable / Auditoría / Finanzas / Negocios
+      else if (
+        textToAnalyze.includes('financi') ||
+        textToAnalyze.includes('auditor') ||
+        textToAnalyze.includes('contab') ||
+        textToAnalyze.includes('negocio') ||
+        textToAnalyze.includes('kpi') ||
+        textToAnalyze.includes('empresa') ||
+        textToAnalyze.includes('mercado')
+      ) {
+        extracted = [
+          {
+            id: `r-ai-${Date.now()}-1`,
+            name: 'Diagnóstico Estratégico & Matrices de Negocio',
+            weightPercentage: 35,
+            maxScore: 10,
+            descriptionMaxLevel: 'Modelado exhaustivo usando matrices FODA, PESTEL y análisis de las 5 fuerzas de Porter con datos reales.'
+          },
+          {
+            id: `r-ai-${Date.now()}-2`,
+            name: 'Proyecciones Financieras & Simulación de Escenarios',
+            weightPercentage: 35,
+            maxScore: 10,
+            descriptionMaxLevel: 'Flujo de caja proyectado a 3 años, cálculo de VAN/TIR y análisis del punto de equilibrio (Break-even).'
+          },
+          {
+            id: `r-ai-${Date.now()}-3`,
+            name: 'Plan de Mitigación de Riesgos & Auditoría',
+            weightPercentage: 30,
+            maxScore: 10,
+            descriptionMaxLevel: 'Identificación de riesgos operacionales y matrices de control interno alineadas con estándares internacionales.'
+          }
+        ];
+      }
+      // 3. Detección por contexto de Programación / Software / Desarrollo / API
+      else if (
+        textToAnalyze.includes('program') ||
+        textToAnalyze.includes('codigo') ||
+        textToAnalyze.includes('código') ||
+        textToAnalyze.includes('desarroll') ||
+        textToAnalyze.includes('software') ||
+        textToAnalyze.includes('api') ||
+        textToAnalyze.includes('db') ||
+        textToAnalyze.includes('frontend') ||
+        textToAnalyze.includes('backend')
+      ) {
+        extracted = [
+          {
+            id: `r-ai-${Date.now()}-1`,
+            name: 'Diseño de Arquitectura & Clean Code',
+            weightPercentage: 40,
+            maxScore: 10,
+            descriptionMaxLevel: 'Separación estricta de responsabilidades, uso correcto de patrones de diseño y código modular autodescriptivo.'
+          },
+          {
+            id: `r-ai-${Date.now()}-2`,
+            name: 'Eficiencia de Algoritmos & Cobertura de Tests',
+            weightPercentage: 35,
+            maxScore: 10,
+            descriptionMaxLevel: 'Análisis de complejidad temporal O(n) y cobertura de pruebas unitarias/integración superior al 85%.'
+          },
+          {
+            id: `r-ai-${Date.now()}-3`,
+            name: 'Documentación de API & Configuración',
+            weightPercentage: 25,
+            maxScore: 10,
+            descriptionMaxLevel: 'Contratos OpenAPI/Swagger completos y guía de instalación y despliegue rápido en Docker/Cloud.'
+          }
+        ];
+      }
+      // 4. Default: Tarea Académica / Ensayo / Investigación General
+      else {
+        extracted = [
+          {
+            id: `r-ai-${Date.now()}-1`,
+            name: 'Rigor Científico & Citas Bibliográficas',
+            weightPercentage: 35,
+            maxScore: 10,
+            descriptionMaxLevel: 'Referencias exhaustivas a literatura científica indexada bajo el formato APA 7ma Edición.'
+          },
+          {
+            id: `r-ai-${Date.now()}-2`,
+            name: 'Profundidad en el Desarrollo & Discusión',
+            weightPercentage: 40,
+            maxScore: 10,
+            descriptionMaxLevel: 'Análisis crítico enlazando los resultados con el estado del arte y respondiendo a cada objetivo secundario.'
+          },
+          {
+            id: `r-ai-${Date.now()}-3`,
+            name: 'Estructura Formal & Estilo de Redacción',
+            weightPercentage: 25,
+            maxScore: 10,
+            descriptionMaxLevel: 'Redacción académica formal, sin errores de concordancia y maquetación visual impecable.'
+          }
+        ];
+      }
+
+      onSetRubrics(extracted);
+    }, 1200);
+  };
+
   const handleAddNewCriterion = () => {
     onAddRubric({
       id: `rubric-${Date.now()}`,
@@ -160,14 +314,32 @@ export const RubricsInputPanel: React.FC<RubricsInputPanelProps> = ({
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={handleAddNewCriterion}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-500/10 hover:bg-sky-500/20 text-sky-300 text-xs font-semibold border border-sky-500/30 transition-colors self-start sm:self-auto"
-        >
-          <Plus className="w-3.5 h-3.5" />
-          <span>Añadir Criterio</span>
-        </button>
+        <div className="flex items-center gap-2 self-start sm:self-auto">
+          {/* Botón Inteligente IA */}
+          <button
+            type="button"
+            onClick={handleExtractAiRubrics}
+            disabled={isExtracting}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-300 text-xs font-semibold border border-indigo-500/30 transition-colors"
+          >
+            {isExtracting ? (
+              <Cpu className="w-3.5 h-3.5 text-indigo-400 animate-spin" />
+            ) : (
+              <Sparkles className="w-3.5 h-3.5 text-indigo-400" />
+            )}
+            <span>{isExtracting ? 'Analizando...' : 'Autodetectar por IA'}</span>
+          </button>
+
+          {/* Botón Añadir Criterio */}
+          <button
+            type="button"
+            onClick={handleAddNewCriterion}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-500/10 hover:bg-sky-500/20 text-sky-300 text-xs font-semibold border border-sky-500/30 transition-colors"
+          >
+            <Plus className="w-3.5 h-3.5" />
+            <span>Añadir Criterio</span>
+          </button>
+        </div>
       </div>
 
       {/* Plantillas Rápidas */}

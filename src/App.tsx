@@ -299,6 +299,8 @@ export function App() {
           {/* Panel 2: Ingesta de Rúbricas */}
           {activeWorkflowTab === 'rubrics' && (
             <RubricsInputPanel
+              title={title}
+              directPrompt={directPrompt}
               rubrics={rubrics}
               onAddRubric={handleAddRubric}
               onUpdateRubric={handleUpdateRubric}
