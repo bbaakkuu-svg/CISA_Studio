@@ -15,8 +15,19 @@ Write-Host "============================================================" -Foreg
 Write-Host "  ApkFlow :: Paso 03 - Sincronizacion de Recursos Web" -ForegroundColor Cyan
 Write-Host "============================================================" -ForegroundColor Cyan
 
-$MobileDir = Resolve-Path (Join-Path $ScriptDir $Config.paths.mobileProjectDir)
-$WebSourceDir = Resolve-Path (Join-Path $ScriptDir $Config.paths.webSourceDir)
+$RawMobileDir = Join-Path $ScriptDir $Config.paths.mobileProjectDir
+if (-not (Test-Path $RawMobileDir)) {
+    Write-Host "ERROR: El directorio móvil no existe. Ejecuta primero 01_Init_Capacitor.ps1" -ForegroundColor Red
+    exit 1
+}
+$MobileDir = (Resolve-Path $RawMobileDir).Path
+
+$RawWebSourceDir = Join-Path $ScriptDir $Config.paths.webSourceDir
+if (-not (Test-Path $RawWebSourceDir)) {
+    Write-Host "ERROR: No se encontró el directorio de distribución web en $RawWebSourceDir. Ejecuta 'npm run build' primero." -ForegroundColor Red
+    exit 1
+}
+$WebSourceDir = (Resolve-Path $RawWebSourceDir).Path
 $IndexHtml = Join-Path $WebSourceDir "index.html"
 
 # 1. Validar archivos web
@@ -25,9 +36,17 @@ if (Test-Path $IndexHtml) {
     Write-Host "OK" -ForegroundColor Green
 } else {
     Write-Host "ERROR" -ForegroundColor Red
-    Write-Host "     No se encontro index.html en $WebSourceDir" -ForegroundColor Red
+    Write-Host "     No se encontro index.html en $WebSourceDir. Por favor ejecuta 'npm run build'." -ForegroundColor Red
     exit 1
 }
+
+# 2. Copiar assets a www en el proyecto móvil para garantizar sincronización perfecta
+$TargetWww = Join-Path $MobileDir "www"
+if (-not (Test-Path $TargetWww)) {
+    New-Item -ItemType Directory -Path $TargetWww -Force | Out-Null
+}
+Copy-Item -Path (Join-Path $WebSourceDir "*") -Destination $TargetWww -Recurse -Force
+Write-Host "  Assets web sincronizados en $TargetWww" -ForegroundColor Gray
 
 # 2. Ejecutar sincronizacion de Capacitor
 Write-Host "  Ejecutando cap sync android..." -ForegroundColor Cyan

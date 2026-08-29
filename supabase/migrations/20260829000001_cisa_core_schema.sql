@@ -24,7 +24,11 @@ CREATE TABLE IF NOT EXISTS public.profiles (
 
 -- Trigger para creación automática de profile tras registro en auth.users
 CREATE OR REPLACE FUNCTION public.handle_new_user()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER 
+LANGUAGE plpgsql 
+SECURITY DEFINER
+SET search_path = public
+AS $$
 BEGIN
     INSERT INTO public.profiles (id, email, full_name, avatar_url)
     VALUES (
@@ -35,7 +39,7 @@ BEGIN
     );
     RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$;
 
 DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 CREATE TRIGGER on_auth_user_created

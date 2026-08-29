@@ -15,8 +15,18 @@ Write-Host "============================================================" -Foreg
 Write-Host "  ApkFlow :: Paso 01 - Inicializacion de Capacitor 8" -ForegroundColor Cyan
 Write-Host "============================================================" -ForegroundColor Cyan
 
-$MobileDir = Resolve-Path (Join-Path $ScriptDir $Config.paths.mobileProjectDir)
-$WebSourceDir = Resolve-Path (Join-Path $ScriptDir $Config.paths.webSourceDir)
+$RawMobileDir = Join-Path $ScriptDir $Config.paths.mobileProjectDir
+if (-not (Test-Path $RawMobileDir)) {
+    New-Item -ItemType Directory -Path $RawMobileDir -Force | Out-Null
+}
+$MobileDir = (Resolve-Path $RawMobileDir).Path
+
+$RawWebSourceDir = Join-Path $ScriptDir $Config.paths.webSourceDir
+if (-not (Test-Path $RawWebSourceDir)) {
+    New-Item -ItemType Directory -Path $RawWebSourceDir -Force | Out-Null
+}
+$WebSourceDir = (Resolve-Path $RawWebSourceDir).Path
+
 $AndroidDir = Join-Path $MobileDir "android"
 $TemplateFile = Join-Path $ScriptDir "templates/capacitor.config.template.json"
 
