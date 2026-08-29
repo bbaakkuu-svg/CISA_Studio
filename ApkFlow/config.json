@@ -16,6 +16,17 @@
     "outputDir": "./output",
     "distDir": "../dist"
   },
+  "branding": {
+    "iconSourcePath": "../public/cisa-icon.png",
+    "fallbackIconPaths": [
+      "../public/icon.png",
+      "../public/favicon.png",
+      "../src/assets/icon.png",
+      "../cisa-icon.png"
+    ],
+    "adaptiveBackgroundColor": "#030712",
+    "generateSplash": true
+  },
   "capacitor": {
     "coreVersion": "^8.5.0",
     "androidVersion": "^8.5.0",
@@ -25,12 +36,12 @@
     "splashScreen": {
       "launchShowDuration": 2000,
       "launchAutoHide": true,
-      "backgroundColor": "#0f172a",
+      "backgroundColor": "#030712",
       "showSpinner": false
     },
     "statusBar": {
       "style": "DARK",
-      "backgroundColor": "#0f172a"
+      "backgroundColor": "#030712"
     }
   },
   "android": {

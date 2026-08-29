@@ -38,12 +38,13 @@ function Execute-Step {
     }
 }
 
-# Ejecucion secuencial de los 5 pasos
-Execute-Step -ScriptName "00_Check_Environment.ps1" -StepTitle "Paso 0: Verificacion del Entorno"
-Execute-Step -ScriptName "01_Init_Capacitor.ps1"     -StepTitle "Paso 1: Inicializacion de Capacitor 8"
-Execute-Step -ScriptName "02_Setup_Keystore.ps1"    -StepTitle "Paso 2: Criptografia y Configuracion Gradle"
-Execute-Step -ScriptName "03_Sync_Web_Assets.ps1"   -StepTitle "Paso 3: Sincronizacion de Recursos Web"
-Execute-Step -ScriptName "04_Build_Signed_APK.ps1"  -StepTitle "Paso 4: Compilacion y Exportacion de APK Firmado"
+# Ejecucion secuencial de los 6 pasos
+Execute-Step -ScriptName "00_Check_Environment.ps1"       -StepTitle "Paso 0: Verificacion del Entorno"
+Execute-Step -ScriptName "01_Init_Capacitor.ps1"           -StepTitle "Paso 1: Inicializacion de Capacitor 8"
+Execute-Step -ScriptName "02_Setup_Keystore.ps1"          -StepTitle "Paso 2: Criptografia y Configuracion Gradle"
+Execute-Step -ScriptName "02b_Apply_Custom_App_Icon.ps1"   -StepTitle "Paso 2b: Branding & Generacion de Iconos Nativos"
+Execute-Step -ScriptName "03_Sync_Web_Assets.ps1"         -StepTitle "Paso 3: Sincronizacion de Recursos Web"
+Execute-Step -ScriptName "04_Build_Signed_APK.ps1"        -StepTitle "Paso 4: Compilacion y Exportacion de APK Firmado"
 
 $Stopwatch.Stop()
 $Elapsed = $Stopwatch.Elapsed.ToString("mm\:ss")

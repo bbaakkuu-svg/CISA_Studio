@@ -62,6 +62,7 @@ ApkFlow/
 ├── 00_Check_Environment.ps1        # Validador de herramientas del sistema (Node, JDK, SDK 36, Gradle)
 ├── 01_Init_Capacitor.ps1           # Inicializador de Capacitor 8 y contenedor nativo android/
 ├── 02_Setup_Keystore.ps1           # Generador de Keystore criptográfico y configurador de signingConfigs
+├── 02b_Apply_Custom_App_Icon.ps1   # Generador e inyector automatizado de iconos nativos (Mipmaps y Splash)
 ├── 03_Sync_Web_Assets.ps1          # Sincronizador de assets web (HTML/CSS/JS) en la app nativa
 ├── 04_Build_Signed_APK.ps1         # Compilador Gradle Wrapper y exportador de binarios versionados
 ├── 05_Run_Full_Pipeline.ps1        # Orquestador maestro "One-Click" (Ejecuta pasos del 00 al 04)
