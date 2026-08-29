@@ -222,8 +222,12 @@ export const RubricsEditor: React.FC<RubricsEditorProps> = ({
                     min="0"
                     max="100"
                     step="5"
-                    value={r.weightPercentage}
-                    onChange={(e) => onUpdateRubric(r.id, { weightPercentage: parseFloat(e.target.value) || 0 })}
+                    value={r.weightPercentage === 0 ? '' : r.weightPercentage}
+                    placeholder="0"
+                    onChange={(e) => {
+                      const val = e.target.value === '' ? 0 : parseFloat(e.target.value);
+                      onUpdateRubric(r.id, { weightPercentage: isNaN(val) ? 0 : Math.min(100, Math.max(0, val)) });
+                    }}
                     className="w-12 bg-transparent text-xs sm:text-sm font-bold text-cyan-300 text-right outline-none"
                   />
                   <span className="text-xs text-cyan-400 font-bold">%</span>

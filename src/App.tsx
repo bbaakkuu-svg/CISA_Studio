@@ -214,6 +214,51 @@ export function App() {
     await loadTasks();
   };
 
+  const handleLoadDemoTask = () => {
+    setTitle('Auditoría de Consenso Distribuido y Rúbricas BFT');
+    setDirectPrompt('Desarrollar un sistema de consenso distribuido con tolerancia a fallos bizantinos (BFT) con análisis de latencia, throughput y verificación de seguridad matemática.');
+    setTargetFormat('pdf');
+    setFiles([
+      {
+        id: 'file-demo-statement',
+        name: 'Enunciado_Sistemas_Distribuidos.pdf',
+        size: 850000,
+        type: 'application/pdf',
+        role: 'statement'
+      },
+      {
+        id: 'file-demo-rubric',
+        name: 'Criterios_Evaluacion_BFT.pdf',
+        size: 320000,
+        type: 'application/pdf',
+        role: 'rubric'
+      }
+    ]);
+    setRubrics([
+      {
+        id: 'r-bft-1',
+        name: 'Rigor Matemático & Demostración de Seguridad',
+        weightPercentage: 40,
+        maxScore: 10,
+        descriptionMaxLevel: 'Demostración formal del umbral n >= 3f + 1 y resistencia a ataques de partición.'
+      },
+      {
+        id: 'r-bft-2',
+        name: 'Arquitectura & Protocolo de Consenso',
+        weightPercentage: 35,
+        maxScore: 10,
+        descriptionMaxLevel: 'Diagrama de fases Pre-Prepare, Prepare, Commit y View-Change detallado.'
+      },
+      {
+        id: 'r-bft-3',
+        name: 'Métricas de Throughput & Formato',
+        weightPercentage: 25,
+        maxScore: 10,
+        descriptionMaxLevel: 'Gráficos comparativos de latencia vs TPS y maquetación técnica impecable.'
+      }
+    ]);
+  };
+
   return (
     <div className="min-h-screen flex flex-col pb-20 sm:pb-12 text-slate-100">
       
@@ -239,6 +284,17 @@ export function App() {
           <p className="text-xs sm:text-sm text-slate-400">
             Sube el enunciado y las rúbricas del docente. CISA calibrará cada respuesta para obtener el 100% de la puntuación en PDF, Excel, PowerPoint o Word.
           </p>
+
+          <div className="pt-2">
+            <button
+              type="button"
+              onClick={handleLoadDemoTask}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-800/90 hover:bg-slate-700 text-cyan-300 text-xs font-bold border border-cyan-500/30 hover:border-cyan-400 transition-all active:scale-95 shadow-sm"
+            >
+              <Zap className="w-3.5 h-3.5 text-cyan-400" />
+              <span>⚡ Cargar Caso de Ejemplo Demostrativo en 1 Clic</span>
+            </button>
+          </div>
         </div>
 
         {/* Stepper de Progreso en Vivo (Cuando se está generando) */}
