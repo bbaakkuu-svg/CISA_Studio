@@ -13,7 +13,7 @@
         "hotfix_prefix": "hotfix/"
     },
     "github_settings": {
-        "project_number": 1,
+        "project_number": 8,
         "labels": [
             "bug",
             "enhancement",
