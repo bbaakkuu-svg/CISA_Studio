@@ -1,0 +1,16 @@
+ext {
+    minSdkVersion = {{MIN_SDK_VERSION}}
+    compileSdkVersion = {{COMPILE_SDK_VERSION}}
+    targetSdkVersion = {{TARGET_SDK_VERSION}}
+    androidxActivityVersion = '1.11.0'
+    androidxAppCompatVersion = '{{ANDROIDX_APPCOMPAT_VERSION}}'
+    androidxCoordinatorLayoutVersion = '{{ANDROIDX_COORDINATORLAYOUT_VERSION}}'
+    androidxCoreVersion = '1.17.0'
+    androidxFragmentVersion = '1.8.9'
+    coreSplashScreenVersion = '{{CORE_SPLASHSCREEN_VERSION}}'
+    androidxWebkitVersion = '1.14.0'
+    junitVersion = '4.13.2'
+    androidxJunitVersion = '1.3.0'
+    androidxEspressoCoreVersion = '3.7.0'
+    cordovaAndroidVersion = '14.0.1'
+}

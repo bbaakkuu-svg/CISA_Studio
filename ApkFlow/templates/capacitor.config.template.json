@@ -1,0 +1,26 @@
+{
+  "appId": "{{APP_ID}}",
+  "appName": "{{APP_NAME}}",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "{{SERVER_SCHEME}}",
+    "cleartext": {{CLEARTEXT}}
+  },
+  "android": {
+    "allowMixedContent": false,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": false
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": {{SPLASH_DURATION}},
+      "launchAutoHide": true,
+      "backgroundColor": "{{SPLASH_BG}}",
+      "showSpinner": false
+    },
+    "StatusBar": {
+      "style": "{{STATUSBAR_STYLE}}",
+      "backgroundColor": "{{STATUSBAR_BG}}"
+    }
+  }
+}

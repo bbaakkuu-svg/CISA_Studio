@@ -1,0 +1,9 @@
+﻿name: Reporte de Error
+description: Avisa sobre algo que no funciona en CISA Studio
+title: "[ERROR] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: error
+    attributes:
+      label: Detalle del fallo detectado

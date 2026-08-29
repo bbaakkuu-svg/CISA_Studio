@@ -1,0 +1,21 @@
+{
+    "nombre_tarea": "CISA_Resolucion_Tareas",
+    "llave_primaria": "ID",
+    "variables_rendimiento": [],
+    "reglas_normalizacion": {
+        "quitar_duplicados": true,
+        "corregir_fechas": true,
+        "formato_fecha_objetivo": "YYYY-MM-DD",
+        "solo_texto_excel": true
+    },
+    "analisis": {
+        "aplicar_tendencias": false,
+        "calcular_promedios": false,
+        "tono": "creativo",
+        "temperatura": 0.7
+    },
+    "exportacion": {
+        "formato_esperado": "md",
+        "generar_alerta": false
+    }
+}

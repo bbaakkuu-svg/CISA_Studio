@@ -1,0 +1,8 @@
+﻿name: Nueva Funcionalidad
+description: Sugiere una nueva idea para CISA Studio
+title: "[NUEVA TAREA] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: "Gracias por proponer una mejora para el proyecto."

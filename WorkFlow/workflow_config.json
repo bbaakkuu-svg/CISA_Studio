@@ -1,0 +1,41 @@
+{
+    "project": {
+        "name": "CISA Studio",
+        "repo_name": "CISA_Studio",
+        "owner": "bbaakkuu-svg",
+        "description": "Plataforma Universal de Resolución Automática de Tareas Basada en Rúbricas (Web + Android APK + Supabase)"
+    },
+    "git_flow": {
+        "main_branch": "main",
+        "develop_branch": "develop",
+        "feature_prefix": "feature/",
+        "bugfix_prefix": "bugfix/",
+        "hotfix_prefix": "hotfix/"
+    },
+    "github_settings": {
+        "project_number": 1,
+        "labels": [
+            "bug",
+            "enhancement",
+            "documentation",
+            "ui/ux",
+            "backend",
+            "ai-engine",
+            "rubrics",
+            "apk-build",
+            "critical"
+        ],
+        "auto_assign": true
+    },
+    "ai_preferences": {
+        "provider": "Gemini",
+        "documentation_style": "Professional Senior",
+        "auto_analyze_build_errors": true
+    },
+    "paths": {
+        "dist": "dist",
+        "docs": "docs",
+        "src": "src",
+        "supabase": "supabase"
+    }
+}
