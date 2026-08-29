@@ -31,6 +31,14 @@ if (-not (Test-Path $GradlewBat)) {
     exit 1
 }
 
+# Asegurar variables de entorno críticas
+if (-not $env:ANDROID_HOME) {
+    $env:ANDROID_HOME = "C:\Users\LENOVO\AppData\Local\Android\Sdk"
+}
+if (-not $env:JAVA_HOME) {
+    $env:JAVA_HOME = "C:\Program Files\Java\jdk-21"
+}
+
 # 1. Compilacion con Gradle Wrapper
 Write-Host "  Compilando release con Gradle Wrapper (assembleRelease)..." -ForegroundColor Cyan
 Write-Host "     (Espere mientras se empaqueta el binario DEX y se firman los bloques v1/v2)" -ForegroundColor Gray
